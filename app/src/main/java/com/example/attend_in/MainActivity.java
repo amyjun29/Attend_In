@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Upon opening the app
     //Gets the student's geolocation
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
