@@ -6,3 +6,4 @@ It then compares the student's location with the classroom's location to see if 
 The student is then able to Check In to the class by entering their student ID to easily do attendance.  
 If the student is found to be out of the range of the classroom, the student is not able to Check In. 
 
+![](attendance pic.gif)
