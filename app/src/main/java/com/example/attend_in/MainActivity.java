@@ -59,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         final String API = "1f576b29567c4c9493df858dd9c285c5";
         final String URL_PREFIX = "https://api.ipgeolocation.io/ipgeo?apiKey=";
-        final String URL_POSTFIX = "&ip=2600:1700:d72:1010:c53f:833:4e8d:e4d1";
-        String url = URL_PREFIX + API + URL_POSTFIX;
+        String url = URL_PREFIX + API;
         //RISK 1: GETTING STUDENT'S ID ADDRESS AND LOCATION FROM IT MIGHT CONFLICT WITH PRIVACY ISSUES. MIGHT NEED ACCESS PERMISSION
 
         //Get JSON Object
