@@ -1,5 +1,20 @@
 package com.example.attend_in;
 
+// Risks: 
+
+// 1. Intrusive, user may not want app to get details at all times
+// 2. Permissions, the app will need to ask for permissions and may ask for more information than it needs 
+// 3. Security, app could be cracked to have location of user without consent
+// 4. Integrity, bad actors could use app to perform actions for other identities unlawfully or with bad intent
+// 5. Checking, user may not be actively at the correct location with the aid of a location changer or ip scrambler
+// 6. Acess, a user should not be given too much authority such as being able to check in multiple times in a short amount of time
+// 7. Consistency, the user should not be able to check in and then leave the designated location until a certain amount of time has passed
+// 8. Simplicity, the app should be simple enough for easy check in but also difficult enough to not be abused easily
+// 9. Accuracy, a user should not be given access to check in unless they are confirmed to be within the required parameters
+// 10. Accessibility, user should only get option to check in once they are confirmed to be at the correct location
+// 11. Multi-use, the user should be able to check in with other devices however not be able to abuse this to exploit the system
+// 12. Authentication, user must input required information unique to them for ability to check in using app
+// 13. Constraints, each device should be given a cooldown time after each use to ensure that the system is safe from exploitation
 
 import androidx.appcompat.app.AppCompatActivity;
 
