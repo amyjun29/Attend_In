@@ -108,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
                 btn_checkIn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         String studentID = txt_studentID.getText().toString();
+                        TextView time = (TextView) findViewById(R.id.time);
+
 
                         //set error if the student ID is empty or shorter than 9 digits
                         if(studentID.equals("") || studentID.length()<9) {
@@ -116,6 +118,15 @@ public class MainActivity extends AppCompatActivity {
                         }
                         //Toast message to let the student know they're checked in
                         Toast.makeText(MainActivity.this, studentID + " You're checked In. Thanks!", Toast.LENGTH_SHORT).show();
+
+                        //Disables check in button to prevent consecutive attempts
+                        btn_checkIn.setEnabled(false);
+
+                        //Prints out time of check in the declared pattern
+                        long date = System.currentTimeMillis();
+                        SimpleDateFormat out = new SimpleDateFormat("hh:mm:ss a\nMMM dd yyyy");
+                        String datestr = out.format(date);
+                        time.setText(datestr);
 
                     }
 
