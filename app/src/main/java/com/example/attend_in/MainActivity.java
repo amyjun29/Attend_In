@@ -36,6 +36,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+
 public class MainActivity extends AppCompatActivity {
     Button btn_checkIn;
     EditText txt_studentID;
