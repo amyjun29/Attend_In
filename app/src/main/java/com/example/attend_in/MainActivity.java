@@ -35,7 +35,6 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
     EditText txt_studentID;
     String lat = "";
     String longt = "";
-    boolean inClass;
+    boolean inClass = false;
     //Set classroom location (It's currently set as the user's location for now, but we can change later)
-    String classLat = "47.66878";
-    String classLongt = "-122.12208";
+    String classLat = "33.85455";
+    String classLongt = "-84.21714";
 
 
     //Upon opening the app
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         final String API = "1f576b29567c4c9493df858dd9c285c5";
         final String URL_PREFIX = "https://api.ipgeolocation.io/ipgeo?apiKey=";
         String url = URL_PREFIX + API;
-        //RISK 1: GETTING STUDENT'S ID ADDRESS AND LOCATION FROM IT MIGHT CONFLICT WITH PRIVACY ISSUES. MIGHT NEED ACCESS PERMISSION
 
         //Get JSON Object
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -76,37 +74,12 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //check to see if the student is within the classroom range
-                for(int i = 0; i<6; i++){
-                    if((lat.charAt(i) == classLat.charAt(i)) && (longt.charAt(i) == classLongt.charAt(i)))
-                        inClass = true;
-                }
-                //RISK 2: THE FIRST 6 DIGITS MIGHT NOT BE ENOUGH TO COMPARE THE CLASSROOM LOCATION AND THE STUDENT'S LOCATION
 
 
-
-                //Toast.makeText(MainActivity.this, lat + " " + longt, Toast.LENGTH_SHORT).show();
-            }
-        },
-                //Error listener
-                new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
-            }
-
-
-
-        });
-        //Add the request for geolocation on to the queue
-        queue.add(request);
-
-        //Check in Button
-            //if the student is within the classroom range
-            if(inClass = true) {
                 btn_checkIn = findViewById(R.id.checkInButton);
                 txt_studentID = (EditText) findViewById(R.id.studentID);
 
+                //Button click
                 btn_checkIn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         String studentID = txt_studentID.getText().toString();
@@ -118,39 +91,48 @@ public class MainActivity extends AppCompatActivity {
                             txt_studentID.setError("Please enter your student ID");
                             return;
                         }
-                        //Toast message to let the student know they're checked in
-                        Toast.makeText(MainActivity.this, studentID + " You're checked In. Thanks!", Toast.LENGTH_SHORT).show();
 
-                        //Disables check in button to prevent consecutive attempts
-                        btn_checkIn.setEnabled(false);
+                        //Compare student location and classroom location
+                        if((lat.substring(0,6).equals(classLat.substring(0,6))) && (longt.substring(0,6).equals(classLongt.substring(0,6)))) {
 
-                        //Prints out time of check in the declared pattern
-                        long date = System.currentTimeMillis();
-                        SimpleDateFormat out = new SimpleDateFormat("hh:mm:ss a\nMMM dd yyyy");
-                        String datestr = out.format(date);
-                        time.setText(datestr);
+                            //Toast message to let the student know they're checked in
+                            Toast.makeText(MainActivity.this, studentID + " You're checked In. Thanks!", Toast.LENGTH_SHORT).show();
 
-                    }
+                            //Disables check in button to prevent consecutive attempts
+                            btn_checkIn.setEnabled(false);
 
+                            //Prints out time of check in the declared pattern
+                            long date = System.currentTimeMillis();
+                            SimpleDateFormat out = new SimpleDateFormat("hh:mm:ss a\nMMM dd yyyy");
+                            String datestr = out.format(date);
+                            time.setText(datestr);
+                        }
+                        //If the student is not within the classroom range
+                        else{
+                            Toast.makeText(MainActivity.this, "You're not within the classroom range.", Toast.LENGTH_SHORT).show();
 
-                });
-            }
-            //if the student is not within the classroom range,
-            else{
-                btn_checkIn = findViewById(R.id.checkInButton);
-                txt_studentID = (EditText) findViewById(R.id.studentID);
-
-                btn_checkIn.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        //Toast message to let the student know they're checked in
-                        String studentID = txt_studentID.getText().toString();
-                        Toast.makeText(MainActivity.this, "You're not within the classroom range.", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
 
 
                 });
+
+
             }
+        },
+                //Error listener for JSON request
+                new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
+            }
+
+
+        });
+
+        //Add the request for geolocation on to the queue
+        queue.add(request);
 
 
     }
