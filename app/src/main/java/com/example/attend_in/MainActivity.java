@@ -40,6 +40,7 @@ import java.text.SimpleDateFormat;
 public class MainActivity extends AppCompatActivity {
     Button btn_checkIn;
     EditText txt_studentID;
+    EditText txt_StudentName;
     String lat = "";
     String longt = "";
     boolean inClass = false;
@@ -78,17 +79,25 @@ public class MainActivity extends AppCompatActivity {
 
                 btn_checkIn = findViewById(R.id.checkInButton);
                 txt_studentID = (EditText) findViewById(R.id.studentID);
+                txt_StudentName = (EditText) findViewById(R.id.StudentName);
 
                 //Button click
                 btn_checkIn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         String studentID = txt_studentID.getText().toString();
+                        String StudentName = txt_StudentName.getText().toString();
                         TextView time = (TextView) findViewById(R.id.time);
 
 
                         //set error if the student ID is empty or shorter than 9 digits
                         if(studentID.equals("") || studentID.length()<9) {
                             txt_studentID.setError("Please enter your student ID");
+                            return;
+                        }
+
+                        //set error if the student name is empty
+                        if(StudentName == null || StudentName.isEmpty()) {
+                            txt_StudentName.setError("Please enter your full name");
                             return;
                         }
 
@@ -110,15 +119,9 @@ public class MainActivity extends AppCompatActivity {
                         //If the student is not within the classroom range
                         else{
                             Toast.makeText(MainActivity.this, "You're not within the classroom range.", Toast.LENGTH_SHORT).show();
-
                         }
-
                     }
-
-
                 });
-
-
             }
         },
                 //Error listener for JSON request
@@ -127,15 +130,10 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
             }
-
-
         });
 
         //Add the request for geolocation on to the queue
         queue.add(request);
-
-
     }
-
 }
 
