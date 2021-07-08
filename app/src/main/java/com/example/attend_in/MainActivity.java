@@ -7,14 +7,14 @@ package com.example.attend_in;
 // 3. Security, app could be cracked to have location of user without consent
 // 4. Integrity, bad actors could use app to perform actions for other identities unlawfully or with bad intent
 // 5. Checking, user may not be actively at the correct location with the aid of a location changer or ip scrambler
-// 6. Acess, a user should not be given too much authority such as being able to check in multiple times in a short amount of time
+// 6. Access, a user should not be given too much authority such as being able to check in multiple times in a short amount of time
 // 7. Consistency, the user should not be able to check in and then leave the designated location until a certain amount of time has passed
 // 8. Simplicity, the app should be simple enough for easy check in but also difficult enough to not be abused easily
 // 9. Accuracy, a user should not be given access to check in unless they are confirmed to be within the required parameters
 // 10. Accessibility, user should only get option to check in once they are confirmed to be at the correct location
 // 11. Multi-use, the user should be able to check in with other devices however not be able to abuse this to exploit the system
 // 12. Authentication, user must input required information unique to them for ability to check in using app
-// 13. Constraints, each device should be given a cooldown time after each use to ensure that the system is safe from exploitation
+// 13. Constraints, each device should be given a cool down time after each use to ensure that the system is safe from exploitation
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,7 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;;
+import com.android.volley.toolbox.Volley;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -36,6 +36,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.text.SimpleDateFormat;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_checkIn;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     String classLat = "33.85455";
     String classLongt = "-84.21714";
 
+    Timer timer;
 
     //Upon opening the app
     //Gets the student's geolocation
@@ -88,16 +91,15 @@ public class MainActivity extends AppCompatActivity {
                         String StudentName = txt_StudentName.getText().toString();
                         TextView time = (TextView) findViewById(R.id.time);
 
+                        //set error if the student name is empty
+                        if(StudentName == null || StudentName.isEmpty()) {
+                            txt_StudentName.setError("Please enter your full name");
+                            return;
+                        }
 
                         //set error if the student ID is empty or shorter than 9 digits
                         if(studentID.equals("") || studentID.length()<9) {
                             txt_studentID.setError("Please enter your student ID");
-                            return;
-                        }
-
-                        //set error if the student name is empty
-                        if(StudentName == null || StudentName.isEmpty()) {
-                            txt_StudentName.setError("Please enter your full name");
                             return;
                         }
 
@@ -109,6 +111,15 @@ public class MainActivity extends AppCompatActivity {
 
                             //Disables check in button to prevent consecutive attempts
                             btn_checkIn.setEnabled(false);
+                            timer = new Timer();
+                            timer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    btn_checkIn.setEnabled(true);
+                                    finish();
+                                }
+                            }, 5400000);
+
 
                             //Prints out time of check in the declared pattern
                             long date = System.currentTimeMillis();
