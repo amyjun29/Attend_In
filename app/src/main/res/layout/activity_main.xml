@@ -7,20 +7,6 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/checkinText"
-        android:layout_width="165dp"
-        android:layout_height="54dp"
-        android:text="@string/csc_4350"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.212" />
-
-    <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,5 +72,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/gsu1"
         tools:layout_editor_absoluteY="-6dp" />
+
+    <Spinner
+        android:id="@+id/classList"
+        android:layout_width="200dp"
+        android:layout_height="62dp"
+        android:entries="@array/classes"
+        app:layout_constraintBottom_toTopOf="@+id/StudentName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

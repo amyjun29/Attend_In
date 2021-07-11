@@ -28,8 +28,12 @@ import com.android.volley.toolbox.Volley;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +43,8 @@ import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.app.ProgressDialog.show;
+
 public class MainActivity extends AppCompatActivity {
     Button btn_checkIn;
     EditText txt_studentID;
@@ -47,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
     String longt = "";
     boolean inClass = false;
     //Set classroom location (It's currently set as the user's location for now, but we can change later)
-    String classLat = "33.85455";
-    String classLongt = "-84.21714";
+    String classLat = "39.96657";
+    String classLongt = "-74.90327";
+
 
     Timer timer;
 
@@ -59,6 +66,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Spinner creation
+        Spinner spinner;;
+        spinner = (Spinner) findViewById(R.id.classList);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = parent.getItemAtPosition(position).toString();
+                Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
 
         //URL for API
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
@@ -145,6 +172,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Add the request for geolocation on to the queue
         queue.add(request);
+
+
     }
+
 }
 

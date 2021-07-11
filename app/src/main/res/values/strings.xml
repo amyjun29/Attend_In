@@ -1,4 +1,11 @@
 <resources>
-    <string name="app_name">Attend_In</string>
-    <string name="csc_4350">CSC 4350</string>
+    <string name="app_name">Panther Check In</string>
+    <string-array name="classes">
+        <item>Select your current class</item>
+        <item>CSC 1301</item>
+        <item>CSC 1302</item>
+        <item>CSC 2720</item>
+        <item>CSC 2510</item>
+        <item>CSC 4350</item>
+    </string-array>
 </resources>
