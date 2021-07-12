@@ -25,6 +25,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -75,14 +77,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
+                if(spinner.getSelectedItemPosition()>1){
+                    Toast.makeText(parent.getContext(), text + " selected", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+
             }
+
+
         });
 
 
@@ -127,6 +136,18 @@ public class MainActivity extends AppCompatActivity {
                         //set error if the student ID is empty or shorter than 9 digits
                         if(studentID.equals("") || studentID.length()<9) {
                             txt_studentID.setError("Please enter your student ID");
+                            return;
+                        }
+
+                        //checks to see if any class is selected
+                        if(spinner.getSelectedItemPosition()<1){
+                            TextView errorText= (TextView) spinner.getSelectedView();
+                            errorText.setError("");
+                            errorText.setTextColor(Color.RED);
+                            errorText.setText("Select a class");
+                            Toast.makeText(MainActivity.this, "Select a class", Toast.LENGTH_SHORT).show();
+
+
                             return;
                         }
 
