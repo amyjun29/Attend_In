@@ -124,24 +124,6 @@ public class MainActivity extends AppCompatActivity {
                         String StudentName = txt_StudentName.getText().toString();
                         TextView time = (TextView) findViewById(R.id.time);
 
-                        //Alert dialog (confirmation  message)
-                        AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(MainActivity.this);
-                        myAlertBuilder.setTitle("Confirmation");
-                        myAlertBuilder.setMessage("Please confirm the following information is correct:");
-                        myAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(MainActivity.this, "Thanks, we will clock in!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                        myAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(MainActivity.this, "Please review your information", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        myAlertBuilder.show();
 
                         //set error if the student name is empty
                         if(StudentName == null || StudentName.isEmpty()) {
@@ -165,34 +147,56 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
 
-                        //Compare student location and classroom location
-                        if((lat.substring(0,6).equals(classLat.substring(0,6))) && (longt.substring(0,6).equals(classLongt.substring(0,6)))) {
 
-                            //Toast message to let the student know they're checked in
-                            Toast.makeText(MainActivity.this, studentID + " You're checked In. Thanks!", Toast.LENGTH_SHORT).show();
+                        //Alert dialog (confirmation  message)
+                        AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(MainActivity.this);
+                        myAlertBuilder.setTitle("Confirmation");
+                        myAlertBuilder.setMessage("Please confirm the following information is correct:");
+                        myAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+//                                Toast.makeText(MainActivity.this, "Thanks, you're clock in!", Toast.LENGTH_SHORT).show();
 
-                            //Disables check in button to prevent consecutive attempts
-                            btn_checkIn.setEnabled(false);
-                            timer = new Timer();
-                            timer.schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                    btn_checkIn.setEnabled(true);
-                                    finish();
+                                //Compare student location and classroom location
+                                if((lat.substring(0,6).equals(classLat.substring(0,6))) && (longt.substring(0,6).equals(classLongt.substring(0,6)))) {
+
+                                    //Toast message to let the student know they're checked in
+                                    Toast.makeText(MainActivity.this, studentID + " You're checked In. Thanks!", Toast.LENGTH_SHORT).show();
+
+                                    //Disables check in button to prevent consecutive attempts
+                                    btn_checkIn.setEnabled(false);
+                                    timer = new Timer();
+                                    timer.schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            btn_checkIn.setEnabled(true);
+                                            finish();
+                                        }
+                                    }, 5400000);
+
+
+                                    //Prints out time of check in the declared pattern
+                                    long date = System.currentTimeMillis();
+                                    SimpleDateFormat out = new SimpleDateFormat("hh:mm:ss a\nMMM dd yyyy");
+                                    String datestr = out.format(date);
+                                    time.setText(datestr);
                                 }
-                            }, 5400000);
+                                //If the student is not within the classroom range
+                                else{
+                                    Toast.makeText(MainActivity.this, "You're not within the classroom range.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                        myAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(MainActivity.this, "Please review your information", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        myAlertBuilder.show();
 
 
-                            //Prints out time of check in the declared pattern
-                            long date = System.currentTimeMillis();
-                            SimpleDateFormat out = new SimpleDateFormat("hh:mm:ss a\nMMM dd yyyy");
-                            String datestr = out.format(date);
-                            time.setText(datestr);
-                        }
-                        //If the student is not within the classroom range
-                        else{
-                            Toast.makeText(MainActivity.this, "You're not within the classroom range.", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 });
             }
