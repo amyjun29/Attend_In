@@ -26,6 +26,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -51,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
     Button btn_checkIn;
     EditText txt_studentID;
     EditText txt_StudentName;
-    String lat = "";
-    String longt = "";
+    String lat = "39.96657";
+    String longt = "-74.90327";
     boolean inClass = false;
     //Set classroom location (It's currently set as the user's location for now, but we can change later)
     String classLat = "39.96657";
@@ -82,16 +84,11 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(parent.getContext(), text + " selected", Toast.LENGTH_SHORT).show();
                 }
 
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-
             }
-
-
         });
 
 
@@ -127,6 +124,25 @@ public class MainActivity extends AppCompatActivity {
                         String StudentName = txt_StudentName.getText().toString();
                         TextView time = (TextView) findViewById(R.id.time);
 
+                        //Alert dialog (confirmation  message)
+                        AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(MainActivity.this);
+                        myAlertBuilder.setTitle("Confirmation");
+                        myAlertBuilder.setMessage("Please confirm the following information is correct:");
+                        myAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(MainActivity.this, "Thanks, we will clock in!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        myAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(MainActivity.this, "Please review your information", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        myAlertBuilder.show();
+
                         //set error if the student name is empty
                         if(StudentName == null || StudentName.isEmpty()) {
                             txt_StudentName.setError("Please enter your full name");
@@ -146,8 +162,6 @@ public class MainActivity extends AppCompatActivity {
                             errorText.setTextColor(Color.RED);
                             errorText.setText("Select a class");
                             Toast.makeText(MainActivity.this, "Select a class", Toast.LENGTH_SHORT).show();
-
-
                             return;
                         }
 
