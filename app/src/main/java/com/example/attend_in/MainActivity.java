@@ -23,18 +23,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -47,7 +43,6 @@ import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.app.ProgressDialog.show;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_checkIn;
@@ -55,12 +50,11 @@ public class MainActivity extends AppCompatActivity {
     EditText txt_StudentName;
     String lat = "39.96657";
     String longt = "-74.90327";
-    boolean inClass = false;
     //Set classroom location (It's currently set as the user's location for now, but we can change later)
-    String classLat = "39.96657";
-    String classLongt = "-74.90327";
-
-
+    //String classLat = "39.96657";
+    //String classLongt = "-74.90327";
+    String classLat = "33.85455";
+    String classLongt = "-84.21714";
     Timer timer;
 
     //Upon opening the app
@@ -72,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Spinner creation
-        Spinner spinner;;
+        Spinner spinner;
         spinner = (Spinner) findViewById(R.id.classList);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -83,15 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 if(spinner.getSelectedItemPosition()>1){
                     Toast.makeText(parent.getContext(), text + " selected", Toast.LENGTH_SHORT).show();
                 }
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
-
 
         //URL for API
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
@@ -112,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
                 btn_checkIn = findViewById(R.id.checkInButton);
                 txt_studentID = (EditText) findViewById(R.id.studentID);
                 txt_StudentName = (EditText) findViewById(R.id.StudentName);
@@ -124,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
                         String StudentName = txt_StudentName.getText().toString();
                         TextView time = (TextView) findViewById(R.id.time);
 
+                        //checks to see if any class is selected
+                        if(spinner.getSelectedItemPosition()<1){
+                            TextView errorText= (TextView) spinner.getSelectedView();
+                            errorText.setError("");
+                            errorText.setTextColor(Color.RED);
+                            errorText.setText("Select a class");
+                            Toast.makeText(MainActivity.this, "Select a class", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
                         //set error if the student name is empty
                         if(StudentName == null || StudentName.isEmpty()) {
@@ -137,17 +136,6 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
 
-                        //checks to see if any class is selected
-                        if(spinner.getSelectedItemPosition()<1){
-                            TextView errorText= (TextView) spinner.getSelectedView();
-                            errorText.setError("");
-                            errorText.setTextColor(Color.RED);
-                            errorText.setText("Select a class");
-                            Toast.makeText(MainActivity.this, "Select a class", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-
                         //Alert dialog (confirmation  message)
                         AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(MainActivity.this);
                         myAlertBuilder.setTitle("Confirmation");
@@ -155,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                         myAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-//                                Toast.makeText(MainActivity.this, "Thanks, you're clock in!", Toast.LENGTH_SHORT).show();
 
                                 //Compare student location and classroom location
                                 if((lat.substring(0,6).equals(classLat.substring(0,6))) && (longt.substring(0,6).equals(classLongt.substring(0,6)))) {
@@ -173,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
                                             finish();
                                         }
                                     }, 5400000);
-
 
                                     //Prints out time of check in the declared pattern
                                     long date = System.currentTimeMillis();
@@ -195,8 +181,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                         myAlertBuilder.show();
-
-
                     }
                 });
             }
@@ -211,9 +195,5 @@ public class MainActivity extends AppCompatActivity {
 
         //Add the request for geolocation on to the queue
         queue.add(request);
-
-
     }
-
 }
-
