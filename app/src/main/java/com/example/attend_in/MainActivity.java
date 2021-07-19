@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                         //Alert dialog (confirmation  message)
                         AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(MainActivity.this);
                         myAlertBuilder.setTitle("Confirmation");
-                        myAlertBuilder.setMessage("Please confirm the following information is correct: Name: " + StudentName + " ID: " + studentID);
+                        myAlertBuilder.setMessage("Please confirm the following information is correct:");
                         myAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
