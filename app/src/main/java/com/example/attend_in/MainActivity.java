@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -45,6 +46,7 @@ import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
+    private Button button;
     Button btn_checkIn;
     EditText txt_studentID;
     EditText txt_StudentName;
@@ -62,6 +64,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Teacher button to switch views
+        button =(Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openTeacherView();
+            }
+        });
 
         //Spinner creation
         Spinner spinner;
@@ -211,4 +222,9 @@ public class MainActivity extends AppCompatActivity {
         //Add the request for geolocation on to the queue
         queue.add(request);
     }
+    public void openTeacherView(){
+        Intent intent = new Intent(this, TeacherView.class);
+        startActivity(intent);
+    }
+
 }
