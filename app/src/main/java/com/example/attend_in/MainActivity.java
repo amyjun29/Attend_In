@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     String lat = "39.96657";
     String longt = "-74.90327";
     //Set classroom location (It's currently set as the user's location for now, but we can change later)
-    //String classLat = "39.96657";
-    //String classLongt = "-74.90327";
     String classLat = "33.85455";
     String classLongt = "-84.21714";
     Timer timer;
@@ -107,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 txt_studentID = (EditText) findViewById(R.id.studentID);
                 txt_StudentName = (EditText) findViewById(R.id.StudentName);
 
+
+
                 //Button click
                 btn_checkIn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
@@ -147,8 +147,21 @@ public class MainActivity extends AppCompatActivity {
                                 //Compare student location and classroom location
                                 if((lat.substring(0,6).equals(classLat.substring(0,6))) && (longt.substring(0,6).equals(classLongt.substring(0,6)))) {
 
+//                                    //add student to the DB
+//
+                                    DAOStudent dao = new DAOStudent();
+                                    Student std = new Student(StudentName, studentID);
+                                    dao.add(std).addOnSuccessListener(suc ->
+                                    {
+                                        Toast.makeText(MainActivity.this, studentID + " You're checked In. Thanks!", Toast.LENGTH_SHORT).show();
+
+                                    }).addOnFailureListener(er ->
+                                    {
+                                        Toast.makeText(MainActivity.this, ""+er.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    });
                                     //Toast message to let the student know they're checked in
-                                    Toast.makeText(MainActivity.this, studentID + " You're checked In. Thanks!", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(MainActivity.this, studentID + " You're checked In. Thanks!", Toast.LENGTH_SHORT).show();
 
                                     //Disables check in button to prevent consecutive attempts
                                     btn_checkIn.setEnabled(false);
@@ -166,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
                                     SimpleDateFormat out = new SimpleDateFormat("hh:mm:ss a\nMMM dd yyyy");
                                     String datestr = out.format(date);
                                     time.setText(datestr);
+
+
                                 }
                                 //If the student is not within the classroom range
                                 else{
