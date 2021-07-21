@@ -2,8 +2,8 @@ package com.example.attend_in;
 
 public class Student {
 
-    private String name;
-    private String id;
+   private String name,id;
+
 
     public Student(){}
 
