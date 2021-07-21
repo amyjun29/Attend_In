@@ -44,7 +44,8 @@ public class TeacherView extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.userList);
-        database = FirebaseDatabase.getInstance().getReference("Student");
+     //   database = FirebaseDatabase.getInstance().getReference("Student");
+        database = FirebaseDatabase.getInstance().getReference("Student").child("-Mf0v32_HIjhBIigZN_I");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -60,7 +61,7 @@ public class TeacherView extends AppCompatActivity {
                 // whenever data at this location is updated.
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
 
-                    Student student = dataSnapshot.getValue(Student.class);
+                    Student student = snapshot.getValue(Student.class);
                     list.add(student);
                     System.out.println(list.toString());
                 }
