@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,8 +45,7 @@ public class TeacherView extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.userList);
-     //   database = FirebaseDatabase.getInstance().getReference("Student");
-        database = FirebaseDatabase.getInstance().getReference("Student").child("-Mf0v32_HIjhBIigZN_I");
+        database = FirebaseDatabase.getInstance().getReference("Student");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -61,16 +61,17 @@ public class TeacherView extends AppCompatActivity {
                 // whenever data at this location is updated.
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
 
-                    Student student = snapshot.getValue(Student.class);
+                    Student student = dataSnapshot.getValue(Student.class);
                     list.add(student);
-                    System.out.println(list.toString());
+
                 }
                 myAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("error" + error.toString());
+                Toast.makeText(TeacherView.this, "Error" + error.toString(), Toast.LENGTH_SHORT).show();
+
             }
 
         });
