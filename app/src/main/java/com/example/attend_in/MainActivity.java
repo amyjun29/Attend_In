@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openTeacherView();
+                openTeacherKey();
             }
         });
 
@@ -224,8 +224,8 @@ public class MainActivity extends AppCompatActivity {
         //Add the request for geolocation on to the queue
         queue.add(request);
     }
-    public void openTeacherView(){
-        Intent intent = new Intent(this, TeacherView.class);
+    public void openTeacherKey(){
+        Intent intent = new Intent(this, TeacherKey.class);
         startActivity(intent);
     }
 
