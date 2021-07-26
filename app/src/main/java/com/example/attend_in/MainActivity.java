@@ -165,8 +165,8 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 //Compare student location and classroom location
-//                                if((lat.substring(0,6).equals(classLat.substring(0,6))) && (longt.substring(0,6).equals(classLongt.substring(0,6)))) {
-                                if((classLat.substring(0,6).equals(classLat.substring(0,6))) && (classLongt.substring(0,6).equals(classLongt.substring(0,6)))) {
+                                if((lat.substring(0,6).equals(classLat.substring(0,6))) && (longt.substring(0,6).equals(classLongt.substring(0,6)))) {
+//                                if((classLat.substring(0,6).equals(classLat.substring(0,6))) && (classLongt.substring(0,6).equals(classLongt.substring(0,6)))) {
 //                                    //add student to the DB
 //o
                                     DAOStudent dao = new DAOStudent();
