@@ -35,7 +35,7 @@ public class TeacherKey extends AppCompatActivity {
                         openTeacherView();
                     }
                     else{
-      //                      Toast.makeText(MainActivity.this,"Please enter the correct KEY", Toast.LENGTH_SHORT).show();
+                        teacherKey.setError("Incorrect Key");
                     }
                 }
         });
