@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         String classId =spinner.getContext().toString();
                         TextView time = (TextView) findViewById(R.id.time);
                         long date = System.currentTimeMillis();
-                        SimpleDateFormat out = new SimpleDateFormat("hh:mm:ss a\nMMM dd yyyy");
+                        SimpleDateFormat out = new SimpleDateFormat("hh:mm:ss");
                         String checktime =out.format(date);
 
                         //checks to see if any class is selected

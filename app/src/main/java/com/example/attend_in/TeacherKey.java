@@ -30,7 +30,7 @@ public class TeacherKey extends AppCompatActivity {
 
                 @Override
                 public void onClick(View view) {
-                    if(teachKey.equals(pass)) {
+                    if(teacherKey.getText().toString().equalsIgnoreCase("abc")) {
                         openTeacherView();
                     }
                 }
