@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     EditText txt_studentID;
     EditText txt_StudentName;
     String classId;
+    String checktime;
     String lat = "39.96657";
     String longt = "-74.90327";
     //Set classroom location (It's currently set as the user's location for now, but we can change later)
@@ -128,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
                         String StudentName = txt_StudentName.getText().toString();
                         String classId =spinner.getContext().toString();
                         TextView time = (TextView) findViewById(R.id.time);
+                        long date = System.currentTimeMillis();
+                        SimpleDateFormat out = new SimpleDateFormat("hh:mm:ss a\nMMM dd yyyy");
+                        String checktime =out.format(date);
 
                         //checks to see if any class is selected
                         if(spinner.getSelectedItemPosition()<1){
@@ -161,12 +165,12 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 //Compare student location and classroom location
-                                if((lat.substring(0,6).equals(classLat.substring(0,6))) && (longt.substring(0,6).equals(classLongt.substring(0,6)))) {
-
+//                                if((lat.substring(0,6).equals(classLat.substring(0,6))) && (longt.substring(0,6).equals(classLongt.substring(0,6)))) {
+                                if((classLat.substring(0,6).equals(classLat.substring(0,6))) && (classLongt.substring(0,6).equals(classLongt.substring(0,6)))) {
 //                                    //add student to the DB
-//
+//o
                                     DAOStudent dao = new DAOStudent();
-                                    Student std = new Student(StudentName, studentID,classId);
+                                    Student std = new Student(StudentName, studentID,classId,checktime);
                                     dao.add(std).addOnSuccessListener(suc ->
                                     {
                                         Toast.makeText(MainActivity.this, studentID + " You're checked In. Thanks!", Toast.LENGTH_SHORT).show();

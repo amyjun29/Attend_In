@@ -23,15 +23,16 @@ public class TeacherKey extends AppCompatActivity {
         teacherKey = (EditText) findViewById(R.id.editTextKey);
         checkattend =(Button) findViewById(R.id.checkattend);
 
+
         checkattend.setOnClickListener(new View.OnClickListener() {
-            String password ="ABC";
+            String pass = "a1a2a3";
            String teachKey = teacherKey.getText().toString();
 
                 @Override
                 public void onClick(View view) {
-//                    if(teacherKey.equals("abc")) {
+                    if(teachKey.equals(pass)) {
                         openTeacherView();
-//                    }
+                    }
                 }
         });
     }
