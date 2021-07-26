@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -32,6 +33,9 @@ public class TeacherKey extends AppCompatActivity {
                 public void onClick(View view) {
                     if(teacherKey.getText().toString().equalsIgnoreCase("a1a2a3")) {
                         openTeacherView();
+                    }
+                    else{
+      //                      Toast.makeText(MainActivity.this,"Please enter the correct KEY", Toast.LENGTH_SHORT).show();
                     }
                 }
         });
