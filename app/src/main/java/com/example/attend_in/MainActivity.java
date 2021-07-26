@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_checkIn;
     EditText txt_studentID;
     EditText txt_StudentName;
+    String classId;
     String lat = "39.96657";
     String longt = "-74.90327";
     //Set classroom location (It's currently set as the user's location for now, but we can change later)
@@ -119,11 +120,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
                 //Button click
                 btn_checkIn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         String studentID = txt_studentID.getText().toString();
                         String StudentName = txt_StudentName.getText().toString();
+                        String classId =spinner.getContext().toString();
                         TextView time = (TextView) findViewById(R.id.time);
 
                         //checks to see if any class is selected
@@ -163,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
 //                                    //add student to the DB
 //
                                     DAOStudent dao = new DAOStudent();
-                                    Student std = new Student(StudentName, studentID);
+                                    Student std = new Student(StudentName, studentID,classId);
                                     dao.add(std).addOnSuccessListener(suc ->
                                     {
                                         Toast.makeText(MainActivity.this, studentID + " You're checked In. Thanks!", Toast.LENGTH_SHORT).show();

@@ -2,14 +2,15 @@ package com.example.attend_in;
 
 public class Student {
 
-   private String name,id;
+   private String name,id,classId;
 
 
     public Student(){}
 
-    public Student(String name, String id) {
+    public Student(String name, String id,String classId) {
         this.name = name;
         this.id = id;
+        this.classId=classId;
     }
 
     public String getName() {
