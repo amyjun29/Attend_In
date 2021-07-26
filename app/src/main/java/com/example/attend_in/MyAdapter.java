@@ -34,6 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         holder.Name.setText(user.getName());
         holder.Id.setText(user.getId());
         holder.time.setText(user.getTime());
+        holder.classid.setText(user.getClassId());
 
     }
 
@@ -44,12 +45,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView Name,Id,time;
+        TextView Name,Id,time,classid;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             Name = itemView.findViewById(R.id.StudentName);
             Id= itemView.findViewById(R.id.studentID);
+            classid=itemView.findViewById(R.id.classname);
             time=itemView.findViewById(R.id.checktime);
         }
     }

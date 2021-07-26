@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String studentID = txt_studentID.getText().toString();
                         String StudentName = txt_StudentName.getText().toString();
-                        String classId =spinner.getContext().toString();
+                        String classId =spinner.getSelectedItem().toString();
                         TextView time = (TextView) findViewById(R.id.time);
                         long date = System.currentTimeMillis();
                         SimpleDateFormat out = new SimpleDateFormat("hh:mm:ss");
